@@ -1,13 +1,13 @@
 import java.math.BigDecimal
 import java.math.RoundingMode
 
-data class Amount(var amount: BigDecimal = BigDecimal.ZERO) {
+data class Amount(var value: BigDecimal = BigDecimal.ZERO) {
     init {
-        amount = amount.setScale(2, RoundingMode.HALF_UP)
+        value = value.setScale(2, RoundingMode.HALF_UP)
     }
 
     fun negate(): Amount {
-        return Amount(amount.negate())
+        return Amount(value.negate())
     }
 
     override fun equals(other: Any?): Boolean {
@@ -16,12 +16,12 @@ data class Amount(var amount: BigDecimal = BigDecimal.ZERO) {
 
         other as Amount
 
-        if (amount != other.amount) return false
+        if (value != other.value) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return amount.hashCode()
+        return value.hashCode()
     }
 }

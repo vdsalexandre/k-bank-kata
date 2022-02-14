@@ -1,20 +1,30 @@
-class Account(initialAmount: Amount = Amount()) {
+import TransactionType.DEPOSIT
+import TransactionType.WITHDRAW
 
-    private val transactions = mutableListOf<Amount>()
+class Account(initialAmount: Amount = Amount()) {
+    private val transactions = mutableListOf<Transaction>()
 
     init {
-        transactions.add(initialAmount)
+        transactions.add(Transaction(DEPOSIT, initialAmount))
     }
 
     fun deposit(amount: Amount) {
-        transactions.add(amount)
+        transactions.add(Transaction(DEPOSIT, amount))
     }
 
     fun withdraw(amount: Amount) {
-        transactions.add(amount.negate())
+        transactions.add(Transaction(WITHDRAW, amount.negate()))
     }
 
     fun getBalance(): Amount {
-        return Amount(transactions.sumOf { it.amount })
+        return Amount(transactions.map { it.amount }.sumOf { it.value })
+    }
+
+    fun getHistory() {
+        transactions.mapIndexed { index, transaction ->
+            println("#${index + 1}> ${transaction.type} : \t${transaction.amount.value}")
+        }
+        println("-------------------")
+        println("# Balance : ${getBalance().value}")
     }
 }
