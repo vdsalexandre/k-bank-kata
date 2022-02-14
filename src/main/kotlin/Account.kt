@@ -1,11 +1,13 @@
 import TransactionType.DEPOSIT
 import TransactionType.WITHDRAW
+import java.math.BigDecimal
 
 class Account(initialAmount: Amount = Amount()) {
     private val transactions = mutableListOf<Transaction>()
 
     init {
-        transactions.add(Transaction(DEPOSIT, initialAmount))
+        if (initialAmount.value > BigDecimal.ZERO)
+            transactions.add(Transaction(DEPOSIT, initialAmount))
     }
 
     fun deposit(amount: Amount) {
